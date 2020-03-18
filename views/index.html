@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <h4>Search the Complete <%= title %> Catalogue</h4>
+
+    <div class="search-section">
+      <form method="GET" action="/" class="form-group">
+        <h3>Select Tag(s)</h3>
+        <div class="tags-container">
+          <% tags.forEach((tag, i) => { %>
+            <label for="<%=tag%>" class="paper-check">
+              <input type="checkbox" name="tags" id="<%=tag%>" value="<%=tag%>"> <span><%=tag%></span>
+            </label>
+          <% }) %>
+        </div>
+        <div class="tags-container">
+          <h3>Type of Ad:</h3>
+            <label for="sellRadio" class="paper-radio">
+              <input type="radio" name="sell" id="sellRadio" value="true"> <span>I am Selling an Item<span>
+            </label>
+            <label for="buyRadio" class="paper-radio">
+              <input type="radio" name="sell" id="buyRadio" value="false"> <span>I am Buying an Item<span>
+            </label>
+        </div>
+      </fieldset>
+      <div class="col sm-5 tags-container">
+        <input type="number" placeholder="Minimum Price" name="min" id="min">
+        <input type="number" placeholder="Maximum Price" name="max" id="max">
+      </div>
+      <div class="col sm-8">
+        <label for="item-name"><h3>Search Item by Name</h3></label>
+        <input class="input-block" type="text" name="name" id="item-name">
+      </div>
+        <button type="submit" class="btn-secondary">Search</button>
+      </form>
+    </div>
+
+    
+    <h2>All Ads</h2>
+    <ul class="classified"
+    <% chunk.forEach(ad => { %>
+      <li class="individual_ad">
+        <div class="card" style="width: 20rem;">
+          <img src="<%= ad.picture %>" />
+          <div class="card-body">
+            <h3 class="card-title"><%= ad.name %></h4>
+            <h4 class="card-title"><%= ad.price + ' Euro' %></h3>
+            <h5 class="card-subtitle"><%= ad.sale ? 'For Sale' : 'To Buy' %></h5>
+            <p class="card-text"><%= ad.tags.map(el => el + ' ') %></p>
+          </div>
+        </div>
+      </li>
+    <% }) %>
+    </ul>
+  </body>
+</html>

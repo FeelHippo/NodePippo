@@ -1,0 +1,25 @@
+{
+  "name": "nodepippo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "install-db": "node install-db.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-validator": "^6.4.0",
+    "http-errors": "~1.6.3",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.4",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
+}

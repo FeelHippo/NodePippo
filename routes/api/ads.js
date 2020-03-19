@@ -33,7 +33,7 @@ const filter_ads = (req) => {
         params.name = name;
     };
     
-    if (sell !== 'undefined') {
+    if (sell && sell !== 'undefined') {
         params.sell = (sell === 'true') ? true : false;
     }
         

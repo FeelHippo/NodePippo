@@ -24,7 +24,6 @@ router.get('/', async (req, res, next) => {
     
 
     res.render('index', { title: 'NodePippo API', chunk: chunk.data, tags: unique_tags });
-    
   } catch (error) {
     console.log('Could not retrieve data: ', error);
     next(1);

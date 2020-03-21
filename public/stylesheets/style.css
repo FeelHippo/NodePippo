@@ -38,3 +38,7 @@ a {
   justify-content: flex-end;
   align-items: flex-end;
 }
+
+.btn-danger {
+  width: 120%;
+}

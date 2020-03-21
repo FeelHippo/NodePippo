@@ -45,7 +45,7 @@ app.use('/api/ads', require('./routes/api/ads'));
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
 
-app.post('/form', upload.single('picture'), async function(req, res) {
+app.post('/form', upload.single('picture'), async (req, res) => {
   try {
     debug(req.file);
     console.log('storage location is ' + req.hostname + '/' + req.file.path);
@@ -61,8 +61,19 @@ app.post('/form', upload.single('picture'), async function(req, res) {
   } catch (error) {
     console.log(error)
   };  
-})
+});
 
+app.get('/:id', async (req, res) => {
+  try {
+    console.log(req.params);
+    
+    await axios.delete(`http://localhost:3000/api/ads/${req.params.id}`, req);
+    res.redirect('/')
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

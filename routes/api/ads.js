@@ -20,6 +20,17 @@ router.get('/', async (req, res, err) => {
     }
 });
 
+router.post('/', async (req, res, err) => {
+    try {
+        const newAd = new Ad(req.body);
+        const savedAd = await newAd.save();   
+        res.end();
+        
+    } catch (error) {
+        
+    }
+})
+
 const filter_ads = (req) => {
     
     let name = req.query.name,

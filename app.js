@@ -2,9 +2,24 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const debug = require('debug')('myapp:server');
 var logger = require('morgan');
+var multer = require('multer');
+var serveIndex = require('serve-index');
+const axios = require('axios');
 
 var app = express();
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + path.extname(file.originalname))
+  }
+});
+
+const upload = multer({ storage: storage });
 
 //connect Mongoose
 require('./lib/connectMongoose');
@@ -19,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}));
 // static images 
 app.use(express.static(path.join(__dirname, 'public/images')));
 
@@ -27,7 +43,26 @@ app.use(express.static(path.join(__dirname, 'public/images')));
 app.use('/api/ads', require('./routes/api/ads'));
 
 app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+app.use('/form', require('./routes/form'));
+
+app.post('/form', upload.single('picture'), async function(req, res) {
+  try {
+    debug(req.file);
+    console.log('storage location is ' + req.hostname + '/' + req.file.path);
+    await axios.post('http://localhost:3000/api/ads', {
+      name: req.body.name,
+      sell: req.body.sell,
+      price: req.body.price,
+      picture: req.file.filename,
+      tags: [req.body.tag1, req.body.tag2]
+    });
+    
+    res.redirect('..');
+  } catch (error) {
+    console.log(error)
+  };  
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

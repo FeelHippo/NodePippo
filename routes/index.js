@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const axios = require('axios');
-const Ad = require('../models/Schema');``
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -18,10 +17,7 @@ router.get('/', async (req, res, next) => {
         tags = [...tags, ...el.tags];
       });
       var unique_tags = tags.filter((v, i, a) => a.indexOf(v) === i);
-    };
-
-    console.log('index.js', chunk.data);
-    
+    };    
 
     res.render('index', { title: 'NodePippo API', chunk: chunk.data, tags: unique_tags });
   } catch (error) {

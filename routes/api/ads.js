@@ -73,8 +73,9 @@ const filter_ads = (req) => {
     }
         
     params.price = {$gte : parseFloat(min), $lte : parseFloat(max)}
-    console.log(typeof req.query.tags)
-    if (typeof req.query.tags == 'string') {
+    console.log('These are the tags', req.query.tags);
+    
+    if (req.query.tags !== 'undefined' && typeof req.query.tags == 'string') {
         params.tags = req.query.tags;
     } else if (req.query.tags && req.query.tags !== 'undefined') {
         params.tags = tags.concat(req.query.tags.split(','));

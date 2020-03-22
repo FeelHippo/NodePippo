@@ -13,7 +13,7 @@
 
     <div class="search-section">
       <form method="GET" action="/" class="form-group">
-        <h3>Select Tag(s)</h3>
+        <h3>Select a Tag</h3>
         <div class="tags-container">
           <% tags.forEach((tag, i) => { %>
             <label for="<%=tag%>" class="paper-check">
@@ -42,6 +42,7 @@
         <button type="submit" class="btn-secondary">Search</button>
       </form>
       <a href="/form"><button class="btn-success">Add a new Ad</button></a>
+      <a href="/"><button class="btn-success">Reset Search</button></a>
     </div>
 
     

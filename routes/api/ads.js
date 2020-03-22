@@ -45,7 +45,6 @@ router.post('/', [
 
 router.delete('/:id', async (req, res, next) => {
     try {
-        console.log('HELLO THERE');
         
         const _id = req.params.id;
         await Ad.deleteOne({ _id: _id });

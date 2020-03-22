@@ -2,6 +2,7 @@
 
 const express =require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator')
 
 const Ad = require('../../models/Schema');
 
@@ -20,16 +21,40 @@ router.get('/', async (req, res, err) => {
     }
 });
 
-router.post('/', async (req, res, err) => {
+router.post('/', [
+    check('name').isAlphanumeric().withMessage('Must be only alphabetical chars'),
+    check('sell').isBoolean(),
+    check('price').isNumeric().withMessage('Must be a valid number'),
+    check('picture').exists(),
+
+],async (req, res, err) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+  }
         const newAd = new Ad(req.body);
         const savedAd = await newAd.save();   
         res.end();
         
     } catch (error) {
+        console.log(error);
         
     }
-})
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        console.log('HELLO THERE');
+        
+        const _id = req.params.id;
+        await Ad.deleteOne({ _id: _id });
+        res.end();
+    } catch (error) {
+        console.log(error);
+        
+    }
+});
 
 const filter_ads = (req) => {
     
@@ -59,19 +84,6 @@ const filter_ads = (req) => {
     
     return params;
   }
-
-router.delete('/:id', async (req, res, next) => {
-    try {
-        console.log('HELLO THERE');
-        
-        const _id = req.params.id;
-        await Ad.deleteOne({ _id: _id });
-        res.end();
-    } catch (error) {
-        console.log(error);
-        
-    }
-})
 
 module.exports = router;
 

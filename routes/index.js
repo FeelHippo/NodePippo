@@ -26,4 +26,15 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/* Delete an Ad */
+
+router.get('/:id', async (req, res) => {
+  try {
+    await axios.delete(`http://localhost:3000/api/ads/${req.params.id}`, req);
+    res.redirect('/');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

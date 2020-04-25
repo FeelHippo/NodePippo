@@ -3,10 +3,17 @@
 /**
  * Module dependencies.
  */
+// allow self signed certificates, DISABLE IN PRODUCTION
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var app = require('../app');
 var debug = require('debug')('nodepippo:server');
-var http = require('http');
+var https = require('https');
+var path = require('path');
+var fs = require('fs');
+
+// prevent 'UNABLE_TO_VERIFY_LEAF_SIGNATURE'
+require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
 
 /**
  * Get port from environment and store in Express.
@@ -16,10 +23,15 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
-var server = http.createServer(app);
+var certOptions = {
+  key: fs.readFileSync(path.resolve('bin/cert/server.key')),
+  cert: fs.readFileSync(path.resolve('bin/cert/server.crt'))
+}
+
+var server = https.createServer(certOptions, app);
 
 /**
  * Listen on provided port, on all network interfaces.

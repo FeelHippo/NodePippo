@@ -9,55 +9,55 @@
 </head>
 <body>
     <h1><%= title %></h1>
-    <h4>Add an Item to Our <%= title %> Catalogue</h4>
+    <h4><%= __('Add an Item to Our') %> <%= title %> <%= __('Catalogue') %></h4>
 
-    <form action="/form" method="POST" enctype="multipart/form-data" class="input-form">
+    <form action="/addAd/form" method="POST" enctype="multipart/form-data" class="input-form">
         <div class="row">
             <div class="col sm-8">
               <div class="form-group">
-                <label for="name"><h3>Insert Name</h3></label>
+                <label for="name"><h3><%= __('Insert Name') %></h3></label>
                 <input class="input-block" type="text" id="name" name="name">
               </div>
             </div>
             <div class="col sm-4">
               <div class="form-group">
-                <label for="price"><h3>Insert Price</h3></label>
+                <label for="price"><h3><%= __('Insert Price') %></h3></label>
                 <input class="input-block" type="number" id="price" name="price">
               </div>
             </div>
           </div>
           
           <div class="radio-input">
-            <h3>Type of Ad:</h3>
+            <h3><%= __('Type of Ad:') %></h3>
               <label for="sellRadio" class="paper-radio">
-                <input type="radio" name="sell" id="sellRadio" value="true"> <h3>I am Selling an Item</h3>
+                <input type="radio" name="sell" id="sellRadio" value="true"> <h3><%= __('I am Selling an Item') %></h3>
               </label>
               <label for="buyRadio" class="paper-radio">
-                <input type="radio" name="sell" id="buyRadio" value="false"> <h3>I am Buying an Item</h3>
+                <input type="radio" name="sell" id="buyRadio" value="false"> <h3><%= __('I am Buying an Item') %></h3>
               </label>
           </div>
           
           <label for="picture" class="picture-input">
             <input type="file" name="picture" id="picture"/>
-            <h3>Select a Picture to Upload</h3>
+            <h3><%= __('Select a Picture to Upload') %></h3>
           </label>
           
           <div class="row">
             <div class="col sm-6">
               <div class="form-group">
-                <label for="tag1"><h3>Insert First Tag</h3></label>
+                <label for="tag1"><h3><%= __('Insert First Tag') %></h3></label>
                 <input class="input-block" type="text" id="tag1" name="tag1">
               </div>
             </div>
             <div class="col sm-6">
               <div class="form-group">
-                <label for="tag2"><h3>Insert Second Tag</h3></label>
+                <label for="tag2"><h3><%= __('Insert Second Tag') %></h3></label>
                 <input class="input-block" type="text" id="tag2" name="tag2">
               </div>
             </div>
         </div>
-        <button type="submit" class="btn-secondary">Submit</button>
+        <button type="submit" class="btn-secondary"><%= __('Submit') %></button>
     </form>
-    <a href="/"><button class="btn-success">Back to Home Page</button></a>
+    <a href="/"><button class="btn-success"><%= __('Back to Home Page') %></button></a>
 </body>
 </html>

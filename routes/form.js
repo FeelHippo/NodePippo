@@ -26,7 +26,7 @@ router.post('/', upload.single('picture'), async (req, res) => {
   try {
     debug(req.file);
     
-    await axios.post('http://localhost:3000/api/ads', {
+    await axios.post('https://localhost:3000/api/ads', {
       name: req.body.name,
       sell: req.body.sell,
       price: req.body.price,
@@ -34,7 +34,7 @@ router.post('/', upload.single('picture'), async (req, res) => {
       tags: [req.body.tag1, req.body.tag2]
     });
     
-    res.redirect('..');
+    res.redirect('/');
   } catch (error) {
     console.log(error)
   };  

@@ -10,6 +10,11 @@ var app = express();
 //connect Mongoose
 require('./lib/connectMongoose');
 
+// setup i18n
+const i18n = require('./lib/i18nConfigure')();
+app.use(i18n.init);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -24,13 +29,24 @@ app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}))
 // static images 
 app.use(express.static(path.join(__dirname, 'public/images')));
 
+// avoid default try request /favicon.ico 
+function ignoreFavicon(req, res, next) {
+  if (req.originalUrl === '/favicon.ico') {
+    res.status(204).json({nope: true});
+  } else {
+    next();
+  }
+}
 
+app.use(ignoreFavicon);
+
+app.use('/', require('./routes/index'));
+app.use('/form', require('./routes/form'));
+app.use('/services', require('./routes/services'))
 // API Routes MongoDB
 app.use('/api/ads', require('./routes/api/ads'));
 
-app.use('/', require('./routes/index'));
-app.use('/addAd/form', require('./routes/form'));
-
+app.use('/deleteAd/:id', require('./routes/api/deleteAd'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,5 +76,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.render('error');
 });
+
+function isAPIRequest(req) {
+  return req.originalUrl.startsWith('/api/ads');
+}
+
 
 module.exports = app;

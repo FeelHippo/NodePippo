@@ -8,8 +8,8 @@ router.get('/', async (req, res, next) => {
   try {
     let tags = [];
     const URL_API = (req.url === '/') ? 
-          'http://localhost:3000/api/ads'   
-          : `http://localhost:3000/api/ads?${typeof req.query.tags == Array ? req.query.tags.map(tag => `tags=${tag}&`).join('') : `tags=${req.query.tags}&`}sell=${req.query.sell}&min=${req.query.min}&max=${req.query.max}&name=${req.query.name}`
+          'https://localhost:3000/api/ads'   
+          : `https://localhost:3000/api/ads?${typeof req.query.tags == Array ? req.query.tags.map(tag => `tags=${tag}&`).join('') : `tags=${req.query.tags}&`}sell=${req.query.sell}&min=${req.query.min}&max=${req.query.max}&name=${req.query.name}`
         
     let chunk = await axios.get(URL_API);
     if(chunk) {
@@ -24,17 +24,6 @@ router.get('/', async (req, res, next) => {
     console.log('Could not retrieve data: ', error);
     next(1);
   }
-});
-
-/* Delete an Ad */
-
-router.get('/:id', async (req, res) => {
-  try {
-    await axios.delete(`http://localhost:3000/api/ads/${req.params.id}`, req);
-    res.redirect('/');
-  } catch (error) {
-    console.log(error);
-  }
-});
+})
 
 module.exports = router;

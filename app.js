@@ -4,11 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var serveIndex = require('serve-index');
+// import express session, to gain access to all individual sessions via req.session
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
-//connect Mongoose
-require('./lib/connectMongoose');
+//connect Mongoose, prepare to be used with MongoStore for session persistence
+const mongooseConnection = require('./lib/connectMongoose');
 
 
 // view engine setup
@@ -42,9 +45,33 @@ app.use(ignoreFavicon);
 
 app.locals.title = 'NodePippo';
 
+// import session authorization, used in '/secured' route
+const sessionAuth = require('./lib/sessionAuth');
+
 // import controller for login form
 const loginController = require('./routes/loginController')
 const securedController = require('./routes/securedController')
+
+app.use(session({
+  name: 'nodepippo-sessions',
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: false,
+  cookie: {
+    secure: true, // the browser will only send this to the server if we are using https
+    maxAge: 1000 * 60 * 60 * 24 * 2 // 2 days
+  },
+  store: new MongoStore({
+    // pass in connection to the DDBB
+    mongooseConnection: mongooseConnection
+  })
+}))
+
+// make the obj session avaialble to all views 
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+})
 
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
@@ -55,7 +82,9 @@ app.use('/api/ads', require('./routes/api/ads'));
 app.use('/deleteAd/:id', require('./routes/api/deleteAd'));
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
-app.get('/secured', securedController.index)
+app.get('/logout', loginController.logout);
+// the below says, use the view secured, get back the middleware we call with our admin privilege (sessionAuth() returns a function), then implement securedController.index
+app.get('/secured', sessionAuth(['admin']), securedController.index);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

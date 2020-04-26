@@ -3,6 +3,9 @@
 /**
  * Module dependencies.
  */
+
+// set up .env file
+require('dotenv').config();
 // allow self signed certificates, DISABLE IN PRODUCTION
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 

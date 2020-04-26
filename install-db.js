@@ -48,18 +48,19 @@ async function initModel() {
 async function initUsers() {
     // first we empty the collection
     await User.deleteMany();
+    // then we populate it
     await User.insertMany([
         {
             email: 'mario@bros.com',
-            password: User.hashPassword('mario')
+            password: await User.hashPassword('mario')
         },
         {
             email: 'luigi@bros.com',
-            password: User.hashPassword('luigi')
+            password: await User.hashPassword('luigi')
         },
         {
             email: 'wario@bros.com',
-            password: User.hashPassword('wario')
+            password: await User.hashPassword('wario')
         }
     ])
 }

@@ -2,8 +2,16 @@
 ---
 ## Install
 ### to initialize the database, run 
+You must copy .env.example to .env and review your configuration
+
+```shell
+cp .env.example .env
+```
 ```javascript
 npm run install-db
+```
+```shell
+npm start
 ```
 ---
 ## API Methods

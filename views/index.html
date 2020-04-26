@@ -1,67 +1,69 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <h4>Search the Complete <%= title %> Catalogue</h4>
+<% include header.html %>
 
-    <div class="search-section">
-      <form method="GET" action="/" class="form-group">
-        <h3>Select a Tag</h3>
-        <div class="tags-container">
-          <% tags.forEach((tag, i) => { %>
-            <label for="<%=tag%>" class="paper-check">
-              <input type="checkbox" name="tags" id="<%=tag%>" value="<%=tag%>"> <span><%=tag%></span>
-            </label>
-          <% }) %>
-        </div>
-        <div class="tags-container">
-          <h3>Type of Ad:</h3>
-            <label for="sellRadio" class="paper-radio">
-              <input type="radio" name="sell" id="sellRadio" value="true"> <span>I am Selling an Item<span>
-            </label>
-            <label for="buyRadio" class="paper-radio">
-              <input type="radio" name="sell" id="buyRadio" value="false"> <span>I am Buying an Item<span>
-            </label>
-        </div>
+  
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+        <h2 class="text-white-50 mx-auto mt-2 mb-5"><%= __('Search the Complete') %> <%= title %> <%= __('Catalogue') %>.</h2>
+        <a href="#search" class="btn btn-primary js-scroll-trigger"><%= __('Get Started') %></a>
+      </div>
+    </div>
+  </header>
+  
+  <div class="search-section" id="search">
+    <form method="GET" action="/" class="form-group">
+      <h3><%= __('Select a Tag') %></h3>
+      <div class="tags-container">
+        <% tags.forEach((tag, i) => { %>
+          <label for="<%=tag%>" class="paper-check">
+            <input type="checkbox" name="tags" id="<%=tag%>" value="<%=tag%>"> <span><%=tag%></span>
+          </label>
+        <% }) %>
+      </div>
+      <h3><%= __('Type of Ad:') %></h3>
+      <fieldset>
+        <label for="sellRadio" class="paper-radio">
+          <input type="radio" name="sell" id="sellRadio" value="true"> <span><%= __('I am Selling an Item') %><span>
+        </label>
+        <label for="buyRadio" class="paper-radio">
+          <input type="radio" name="sell" id="buyRadio" value="false"> <span><%= __('I am Buying an Item') %><span>
+        </label>
       </fieldset>
-      <div class="col sm-5 tags-container">
+      
+      <div class="col sm-5 row">
         <input type="number" placeholder="Minimum Price" name="min" id="min">
         <input type="number" placeholder="Maximum Price" name="max" id="max">
       </div>
-      <div class="col sm-8">
-        <label for="item-name"><h3>Search Item by Name</h3></label>
+      <div class="col sm-8 form-group">
+        <label for="item-name"><h4><%= __('Search Item by Name') %></h4></label>
         <input class="input-block" type="text" name="name" id="item-name">
       </div>
-        <button type="submit" class="btn-secondary">Search</button>
-      </form>
-      <a href="/addAd/form"><button class="btn-success">Add a new Ad</button></a>
-      <a href="/"><button class="btn-success">Reset Search</button></a>
+      <button type="submit" class="btn-secondary"><%= __('Search') %></button>
+    </form>
+    <div class="row">
+      <a href="/form"><button class="btn-success"><%= __('Add a new Ad') %></button></a>
+    <a href="/"><button class="btn-success"><%= __('Reset Search') %></button></a>
     </div>
+  </div>
 
-    
-    <h2>All Ads</h2>
-    <ul class="classified"
-    <% chunk.forEach(ad => { %>
-      <li class="individual_ad">
-        <div class="card" style="width: 20rem;">
-          <img src="<%= ad.picture %>" />
-          <div class="card-body">
-            <h3 class="card-title"><%= ad.name %></h4>
-            <h4 class="card-title"><%= ad.price + ' Euro' %></h3>
-            <h5 class="card-subtitle"><%= ad.sale ? 'For Sale' : 'To Buy' %></h5>
-            <p class="card-text"><%= ad.tags.map(el => el + ' ') %></p>
-          </div>
-          <a href="<%= ad._id%>"><button class="btn-danger">Delete this Ad</button></a>
+  
+  
+  <ul class="form-group">
+  <h2><%= __('All Ads') %></h2>
+  <% chunk.forEach(ad => { %>
+    <li class="individual_ad">
+      <div class="card" style="width: 50vw;">
+        <img src="<%= ad.picture %>" style="width: 100%;"/>
+        <div class="card-body">
+          <h3 class="card-title"><%= ad.name %></h4>
+          <h4 class="card-title"><%= ad.price + ' Euro' %></h3>
+          <h5 class="card-subtitle"><%= ad.sale ? 'For Sale' : 'To Buy' %></h5>
+          <p class="card-text"><%= ad.tags.map(el => el + ' ') %></p>
         </div>
-      </li>
-    <% }) %>
-    </ul>
-  </body>
-</html>
+        <a href="/deleteAd/<%= ad._id%>"><button class="btn-danger"><%= __('Delete this Ad') %></button></a>
+      </div>
+    </li>
+  <% }) %>
+  </ul>
+  <% include footer.html %>

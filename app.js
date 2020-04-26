@@ -10,10 +10,6 @@ var app = express();
 //connect Mongoose
 require('./lib/connectMongoose');
 
-// setup i18n
-const i18n = require('./lib/i18nConfigure')();
-app.use(i18n.init);
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +25,10 @@ app.use('/ftp', express.static('public'), serveIndex('public', {'icons': true}))
 // static images 
 app.use(express.static(path.join(__dirname, 'public/images')));
 
+// setup i18n here to avoid conflicts with cookieParser()
+const i18n = require('./lib/i18nConfigure')();
+app.use(i18n.init);
+
 // avoid default try request /favicon.ico 
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl === '/favicon.ico') {
@@ -40,14 +40,22 @@ function ignoreFavicon(req, res, next) {
 
 app.use(ignoreFavicon);
 
+app.locals.title = 'NodePippo';
+
+// import controller for login form
+const loginController = require('./routes/loginController')
+const securedController = require('./routes/securedController')
+
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
-app.use('/services', require('./routes/services'))
+app.use('/services', require('./routes/services'));
+app.use('/change-locale', require('./routes/change-locale'))
 // API Routes MongoDB
 app.use('/api/ads', require('./routes/api/ads'));
-
 app.use('/deleteAd/:id', require('./routes/api/deleteAd'));
-
+app.get('/login', loginController.index);
+app.post('/login', loginController.post);
+app.get('/secured', securedController.index)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

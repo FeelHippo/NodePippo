@@ -2,11 +2,13 @@
 
 const conn = require('./lib/connectMongoose');
 const Ad = require('./models/Schema');
+const User = require('./models/User');
 
 //initiate MongoDB collection
 conn.once('open', async () => {
     try {
         await initModel();
+        await initUsers();
         conn.close();
     } catch (error) {
         console.log('Something went wrong: ', error);
@@ -42,3 +44,24 @@ async function initModel() {
         }
     ])
 }
+
+async function initUsers() {
+    // first we empty the collection
+    await User.deleteMany();
+    await User.insertMany([
+        {
+            email: 'mario@bros.com',
+            password: User.hashPassword('mario')
+        },
+        {
+            email: 'luigi@bros.com',
+            password: User.hashPassword('luigi')
+        },
+        {
+            email: 'wario@bros.com',
+            password: User.hashPassword('wario')
+        }
+    ])
+}
+
+

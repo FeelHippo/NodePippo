@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const conn = require('./lib/connectMongoose');
 const Ad = require('./models/Schema');
 const User = require('./models/User');
@@ -61,6 +63,10 @@ async function initUsers() {
         {
             email: 'wario@bros.com',
             password: await User.hashPassword('wario')
+        },
+        {
+            email: 'mezzasegolas@gmail.com',
+            password: await User.hashPassword('filippo')
         }
     ])
 }

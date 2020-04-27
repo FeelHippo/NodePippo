@@ -9,6 +9,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 var app = express();
+console.log('HHHHEEEEEELLLLLLOOOOOOOOO', process.env);
 
 //connect Mongoose, prepare to be used with MongoStore for session persistence
 const mongooseConnection = require('./lib/connectMongoose');

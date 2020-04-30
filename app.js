@@ -9,7 +9,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 var app = express();
-console.log('HHHHEEEEEELLLLLLOOOOOOOOO', process.env);
 
 //connect Mongoose, prepare to be used with MongoStore for session persistence
 const mongooseConnection = require('./lib/connectMongoose');
@@ -74,9 +73,12 @@ app.use((req, res, next) => {
   next();
 })
 
+// basic Auth implementation example
+const basicAuth = require('./lib/basicAuth');
+
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
-app.use('/services', require('./routes/services'));
+app.use('/services', basicAuth(), require('./routes/services'));
 app.use('/change-locale', require('./routes/change-locale'))
 // API Routes MongoDB
 app.use('/api/ads', require('./routes/api/ads'));

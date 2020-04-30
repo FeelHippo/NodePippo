@@ -8,7 +8,7 @@ const nodemailerTrans = require('../lib/nodemailerConfig');
 const userSchema = mongoose.Schema({
     email: {
         type: String,
-        unique: true
+        unique: true // very important to make DB queries reliable and quick
     },
     password: String,
 });

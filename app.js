@@ -75,15 +75,23 @@ app.use((req, res, next) => {
 
 // basic Auth implementation example
 const basicAuth = require('./lib/basicAuth');
+// JWT controller
+const jwtAuth = require('./lib/jwtAuth');
+
+// API Routes MongoDB
+app.use('/api/ads', require('./routes/api/ads'));
+app.use('/api/loginJWT', loginController.postJWT);
+// only delete an ad if the user is JWT authenticated
+app.use('/deleteAd/:id', jwtAuth(), require('./routes/api/deleteAd'));
 
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
 app.use('/services', basicAuth(), require('./routes/services'));
 app.use('/change-locale', require('./routes/change-locale'))
-// API Routes MongoDB
-app.use('/api/ads', require('./routes/api/ads'));
-app.use('/deleteAd/:id', require('./routes/api/deleteAd'));
+
+// authentication routes
 app.get('/login', loginController.index);
+// when user logs in, we also create a JWT token for later use
 app.post('/login', loginController.post);
 app.get('/logout', loginController.logout);
 // the below says, use the view secured, get back the middleware we call with our admin privilege (sessionAuth() returns a function), then implement securedController.index

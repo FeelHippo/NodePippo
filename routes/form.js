@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     cb(null, '../NodePippo/public/images')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname + path.extname(file.originalname))
+    cb(null, file.originalname)
   }
 });
 
@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
   res.render('form', { title: 'NodePippo API'});
 });
 
-router.post('/', upload.single('picture'), async (req, res) => {
+router.post('/', upload.single('picture'), async (req, res, next) => {
   try {
     debug(req.file);
     
@@ -35,6 +35,8 @@ router.post('/', upload.single('picture'), async (req, res) => {
     });
     
     res.redirect('/');
+    // skip to the next middleware, which will invoke the AMQP publisher
+    next();
   } catch (error) {
     console.log(error)
   };  

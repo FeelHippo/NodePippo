@@ -62,7 +62,6 @@ class LoginController {
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
                 expiresIn: '7d' // 1 week
             });
-            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', token);
             
             // return token to server
             res.json({ token: token });

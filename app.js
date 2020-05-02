@@ -77,6 +77,8 @@ app.use((req, res, next) => {
 const basicAuth = require('./lib/basicAuth');
 // JWT controller
 const jwtAuth = require('./lib/jwtAuth');
+// AMQP middleware
+const main = require('./lib/publisher');
 
 // API Routes MongoDB
 app.use('/api/ads', require('./routes/api/ads'));
@@ -86,6 +88,8 @@ app.use('/deleteAd/:id', jwtAuth(), require('./routes/api/deleteAd'));
 
 app.use('/', require('./routes/index'));
 app.use('/form', require('./routes/form'));
+// AMQP middleware
+app.use(main());
 app.use('/services', basicAuth(), require('./routes/services'));
 app.use('/change-locale', require('./routes/change-locale'))
 

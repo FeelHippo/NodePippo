@@ -87,9 +87,8 @@ app.use('/api/loginJWT', loginController.postJWT);
 app.use('/deleteAd/:id', jwtAuth(), require('./routes/api/deleteAd'));
 
 app.use('/', require('./routes/index'));
-app.use('/form', require('./routes/form'));
-// AMQP middleware
-app.use(main());
+app.use('/form', require('./routes/form'), main());
+// AMQP middleware, fired after the user has submitted a new ad, create thumbnail
 app.use('/services', basicAuth(), require('./routes/services'));
 app.use('/change-locale', require('./routes/change-locale'))
 

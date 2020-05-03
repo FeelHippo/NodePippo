@@ -25,15 +25,15 @@ router.post('/', [
     check('sell').isBoolean(),
     check('price').isNumeric().withMessage('Must be a valid number'),
     check('picture').exists(),
-
 ],async (req, res, err) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
-  }
+        }
         const newAd = new Ad(req.body);
-        const savedAd = await newAd.save();   
+        const savedAd = await newAd.save(); 
+          
         res.end();
         
     } catch (error) {

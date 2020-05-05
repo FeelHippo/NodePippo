@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public/images')));
 const i18n = require('./lib/i18nConfigure')();
 app.use(i18n.init);
 
+
 // avoid default try request /favicon.ico 
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl === '/favicon.ico') {

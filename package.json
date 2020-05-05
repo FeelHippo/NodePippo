@@ -12,9 +12,11 @@
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
     "test": "jest",
-    "install-db": "node install-db.js"
+    "install-db": "node install-db.js",
+    "translate": "node translateLocales.js"
   },
   "dependencies": {
+    "@feelhippo/translate": "^2.1.0",
     "amqplib": "^0.5.5",
     "axios": "^0.19.2",
     "basic-auth": "^2.0.1",

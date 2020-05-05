@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/:locale', (req, res, next) => {
+router.get('/:locale', async (req, res, next) => {
 	// retrieve the locale requested
 	const { locale } = req.params;
 	// save the webpage the request came from

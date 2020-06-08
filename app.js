@@ -13,7 +13,6 @@ var app = express();
 //connect Mongoose, prepare to be used with MongoStore for session persistence
 const mongooseConnection = require('./lib/connectMongoose');
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -68,7 +67,7 @@ app.use(session({
   })
 }))
 
-// make the obj session avaialble to all views 
+// make the obj session available to all views 
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();

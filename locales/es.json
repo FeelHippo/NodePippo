@@ -38,5 +38,12 @@
 	"All Our Ads": "All Our Ads",
 	"Delete this Ad": "Delete this Ad",
 	"Back to Home Page": "Back to Home Page",
-	"invalid credentials": "invalid credentials"
+	"invalid credentials": "invalid credentials",
+	"Add an Item to Our": "Add an Item to Our",
+	"Insert Name": "Insert Name",
+	"Insert Price": "Insert Price",
+	"Select a Picture to Upload": "Select a Picture to Upload",
+	"Insert First Tag": "Insert First Tag",
+	"Insert Second Tag": "Insert Second Tag",
+	"Submit": "Submit"
 }

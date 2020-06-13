@@ -55,10 +55,10 @@ const securedController = require('./routes/securedController')
 app.use(session({
   name: 'nodepippo-sessions',
   secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
+  saveUninitialized: false,
   resave: false,
   cookie: {
-    secure: true, // the browser will only send this to the server if we are using https
+    secure: false, // the browser will only send this to the server if we are using https
     maxAge: 1000 * 60 * 60 * 24 * 2 // 2 days
   },
   store: new MongoStore({

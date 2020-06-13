@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const nodemailerTrans = require('../lib/nodemailerConfig');
+const transporter = require('../lib/nodemailerConfig');
 
 // define schema
 const userSchema = mongoose.Schema({
@@ -20,11 +20,17 @@ userSchema.statics.hashPassword = function(plainPassword) {
 userSchema.methods.sendEmail = function(from, subject, body) {
     
     // send an email, async operation
-    return nodemailerTrans.sendMail({
+    return transporter.sendMail({
         from: from,
         to: this.email,
         subject: subject,
         html: body
+    }, (err, info) => {
+        if (err) {
+            console.log('User.js', err);
+        } else {
+            console.log('User.js', info);
+        }
     })
 }
 

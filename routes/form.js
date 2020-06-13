@@ -26,7 +26,7 @@ router.post('/', upload.single('picture'), async (req, res, next) => {
   try {
     debug(req.file);
     
-    await axios.post('https://localhost:3000/api/ads', {
+    await axios.post('http://localhost:3000/api/ads', {
       name: req.body.name,
       sell: req.body.sell,
       price: req.body.price,

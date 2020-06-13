@@ -8,8 +8,8 @@ router.get('/', async (req, res, next) => {
   try {
     let tags = [];
     const URL_API = (req.url === '/') ? 
-          'https://localhost:3000/api/ads'   
-          : `https://localhost:3000/api/ads?${typeof req.query.tags == Array ? req.query.tags.map(tag => `tags=${tag}&`).join('') : `tags=${req.query.tags}&`}sell=${req.query.sell}&min=${req.query.min}&max=${req.query.max}&name=${req.query.name}`
+          'http://localhost:3000/api/ads'   
+          : `http://localhost:3000/api/ads?${typeof req.query.tags == Array ? req.query.tags.map(tag => `tags=${tag}&`).join('') : `tags=${req.query.tags}&`}sell=${req.query.sell}&min=${req.query.min}&max=${req.query.max}&name=${req.query.name}`
         
     let chunk = await axios.get(URL_API);
     if(chunk) {

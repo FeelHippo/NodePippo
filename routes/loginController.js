@@ -12,10 +12,11 @@ class LoginController {
         res.render('login');
     }
     async post(req, res, next) {
+        
         try {
             const email = req.body.email;
             const password = req.body.password;
-
+            
             // query to DDBB
             const user = await User.findOne({ email });
             // if no users were found, or the password provided is wrong:
@@ -27,15 +28,16 @@ class LoginController {
                 res.render('login');
                 return;
             }
+            
             // search user and password
             // keep track of user ID in his personal secured session
             req.session.authUser = {
                 _id: user._id
-            }
+            }            
             
             // a user was found and the password is correct
             res.redirect('/secured');
-
+            
             // send a confirmation email to the user
             await user.sendEmail(process.env.ADMIN_EMAIL, 'Security Alert', 'If you did not grant access, you should check this activity and secure your account.');
         } catch (error) {

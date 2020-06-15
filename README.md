@@ -1,4 +1,16 @@
 # NodePippo 
+
+## AWS deployment:
+[ReactJS application](http://3.22.100.95)
+[ExpressJS application](http://ec2-3-22-100-95.us-east-2.compute.amazonaws.com)
+
+Please use the following dummy users to access the Node app:
+- user mario@bros.com, password mario
+- user luigi@bros.com, password luigi
+- user wario@bros.com, password wario
+
+### Look forward to your feedback!
+
 ---
 A Restful API built with NodeJS, Express, and MongoDB.
 ---
